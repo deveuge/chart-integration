@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+    	http://camel.apache.org/schema/spring 					http://camel.apache.org/schema/spring/camel-spring.xsd            
+    	http://www.springframework.org/schema/context 			http://www.springframework.org/schema/context/spring-context.xsd      
+    	http://www.springframework.org/schema/jee 				http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!-- CONFIGURATION -->
+    <context:component-scan base-package="com.deveuge.integration" />
+    
+    <jee:jndi-lookup id="externalConfigLocation" jndi-name="java:comp/env/config-properties" />
+    <bean id="configurationProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:configuration.properties</value>
+                <value>#{externalConfigLocation}</value>
+            </list>
+        </property>
+    </bean>
+    <context:property-placeholder order="1" properties-ref="configurationProperties" />
+    
+    <bean id="nameWithPlaceholderBeanFactory" class="com.deveuge.integration.chart.config.PlaceholderBeanFactoryPostProcessor" >
+        <constructor-arg ref="configurationProperties" />
+    </bean>
+
+    <!-- CAMEL ROUTES -->
+    <bean id="chartRouteBuilder" class="com.deveuge.integration.chart.ChartRouteBuilder" />
+    <bean id="emailRouteBuilder" class="com.deveuge.integration.chart.EmailRouteBuilder" />
+    <camelContext id="chart-camelContext" xmlns="http://camel.apache.org/schema/spring">
+        <routeBuilder ref="chartRouteBuilder" />
+        <routeBuilder ref="emailRouteBuilder" />
+    </camelContext>
+
+    <import resource="cxf-beans.xml" />
+</beans>

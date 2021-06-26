@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:http="http://cxf.apache.org/transports/http/configuration"
+    xmlns:sec="http://cxf.apache.org/configuration/security" xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd      	           
+    	http://camel.apache.org/schema/cxf 						http://camel.apache.org/schema/cxf/camel-cxf.xsd
+    	http://cxf.apache.org/transports/http/configuration 	http://cxf.apache.org/schemas/configuration/http-conf.xsd
+    	http://cxf.apache.org/configuration/security 			http://cxf.apache.org/schemas/configuration/security.xsd
+    	http://www.springframework.org/schema/context 			http://www.springframework.org/schema/context/spring-context.xsd          
+    	http://www.springframework.org/schema/util 				http://www.springframework.org/schema/util/spring-util.xsd
+        http://cxf.apache.org/jaxrs                             http://cxf.apache.org/schemas/jaxrs.xsd">
+    
+    <!-- INTERCEPTORS -->
+    <bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor">
+        <property name="limit" value="${client.loggingInInterceptor.limit}"/>
+        <property name="prettyLogging" value="false" />
+    </bean>
+    
+    <bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+        <property name="limit" value="${client.loggingOutInterceptor.limit}"/>
+        <property name="prettyLogging" value="false" />
+    </bean>
+
+	<!-- CLIENT -->
+    <cxf:rsClient id="quickChartClient"
+        address="${client.endpoint}/chart" 
+        serviceClass="com.deveuge.integration.chart.service.IQuickChartService">
+         <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor" />
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="loggingOutInterceptor" />
+        </cxf:outInterceptors>
+        <cxf:providers>
+		   <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</cxf:providers>
+    </cxf:rsClient>
+    
+    <!-- HTTPS -->
+    <http:conduit name="${client.endpoint}.*">
+	    <http:client ReceiveTimeout="${client.receiveTimeout}" ConnectionTimeout="${client.connectionTimeout}"/>
+	    <http:tlsClientParameters disableCNCheck="true">
+        </http:tlsClientParameters>
+	</http:conduit>
+
+</beans>

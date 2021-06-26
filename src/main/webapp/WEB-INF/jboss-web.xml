@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+    <context-root>chart</context-root>
+
+    <resource-ref>
+        <res-ref-name>config-properties</res-ref-name>
+        <res-type>java.lang.String</res-type>
+        <jndi-name>java:/chart-integration/configuration.properties</jndi-name>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+</jboss-web>
