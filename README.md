@@ -4,7 +4,7 @@
 **Chart-integration** is an integration component built for RedHat JBoss Fuse that converts CSV files to graphical charts. It uses [QuickChart API](https://quickchart.io/), built on [Chart.js](https://www.chartjs.org/), for generating chart images.
 
 ## Features
-- Import a CSV file and watch it magically convert to a graphical chart in PNG format.
+- Import a CSV file and watch it magically convert into a graphical chart in PNG format.
 - Select between bar, line, radar, doughnut or pie charts.
 - Configure email notifications for every time a chart is generated successfully or when an error occurs.
 
@@ -46,13 +46,13 @@ The properties of the configuration file are described below:
     - **general.file.delimiter**: Delimiter of the CSV files.
     - **general.directory.input**: Input directory. CSV files to convert should be left here.
     - **general.directory.output**: Output directory. Charts (in PNG format) will be left here.
-    - **general.directory.processed**: Processed directory. Once the chart is generated, the original file will be left here with .BAK extension.
+    - **general.directory.processed**: Processed directory. Once the chart is generated, the original CSV file will be left here with .BAK extension.
 - Email notifications:
     - **email.smtp.server**: SMTP Server. Set it to "smtp.gmail.com" if you want to use gmail. Leave empty if you don't want to use email notifications.
     - **email.smpt.port**: SMTP Port. Set it to "25" if you want to use gmail.
     - **email.smtp.requiresAuthentication**: Boolean that defines if the SMTP connection requires authentication.
     - **email.smtp.authentication.username**: SMTP Authentication username. Leave empty if the SMTP doesn't requires authentication.
-    - **email.smtp.authentication.password**: SMTP Authentication password. Can be encrypted with [JBoss Password Vault](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/security_guide/configure_and_use_password_vault). Leave empty if the SMTP doesn't requires authentication.
+    - **email.smtp.authentication.password**: SMTP Authentication password. Can be encrypted with [JBoss Password Vault](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/6.4/html/security_guide/configure_and_use_password_vault). Leave empty if the SMTP doesn't require authentication.
     - **email.notification.from**: Email notification sender.
     - **email.notification.to**: Email notification receivers separated by commas.
     - **email.notification.subject.ok**: Email subject for correct executions. Leave empty if you don't want to use notifications for correct executions.
@@ -62,7 +62,7 @@ The properties of the configuration file are described below:
 
 ## Testing the component
 Once the component is deployed in JBoss and the server is up and running, you can follow this steps to verify it works correctly:
-1. Drag a file from the "testFiles" folder to the "work/input" folder that now is located under "ChartIntegration", in you JBoss installation directory.
+1. Drag a file from the "testFiles" folder to the "work/input" folder that now is located under "ChartIntegration", in your JBoss installation directory.
 2. Go to the "work/output" folder and check there is now a PNG file named after your original file with a timestamp added.
 3. Hooray! Your chart has been generated successfully.
 4. Verify that the original CSV file is now in the "work/processed" folder with .BAK extension. 
@@ -79,7 +79,7 @@ To change this, you can add one of the following suffixes to the filename, prece
 (e.g.: Rename "Sales.csv" to "Sales-LINE.csv")
 
 ## Email notifications
-The email notifications can be personalizing editing the templates present in the "conf" folder.
+The email notifications can be personalized editing the templates present in the "conf" folder.
 For correct notifications, the generated chart will be attached to the email.
 ![alt text](docs/OKEmail.png "OK Notification")
 ![alt text](docs/KOEmail.png "KO Notification")
