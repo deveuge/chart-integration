@@ -81,6 +81,7 @@ To change this, you can add one of the following suffixes to the filename, prece
 ## Email notifications
 The email notifications can be personalized editing the templates present in the "conf" folder.
 For correct notifications, the generated chart will be attached to the email.
+
 ![alt text](docs/OKEmail.png "OK Notification")
 ![alt text](docs/KOEmail.png "KO Notification")
 
